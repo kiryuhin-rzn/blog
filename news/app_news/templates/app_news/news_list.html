@@ -1,0 +1,15 @@
+<html>
+<h1>Новости</h1>
+<a href="{% url 'add_news' %}">Добавить новость</a>
+{% if news_list %}
+<ul>
+{% for news in news_list %}
+<li><td align="left"><a href="/news/{{ news.id }}">{{ news.title }}</a></td>
+    <td align="left">{{ news.description }}</td>
+</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>Новостей нет.</p>
+{% endif %}
+</html>
