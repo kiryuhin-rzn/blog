@@ -1,15 +1,34 @@
-<html>
-<h1>Новости</h1>
-<a href="{% url 'add_news' %}">Добавить новость</a>
+{% extends 'app_news/base.html' %}
+{% block content %}
+{% load i18n %}
+<html lang='en'>
+<head>
+{% load static %}
+<link rel="stylesheet" href="{% static '/news/css/news.css' %}">
+<meta charset='UTF-8'>
+<title>{% trans 'Our translation page title' %}</title>
+</head>
+{% if user.is_authenticated %}
+<p>Hi {{ user.username }}!</p>
+<p><a href="{% url 'logout' %}">Log out</a></p>
+{% else %}
+<p>You are not logged in.</p>
+<a href="{% url 'login' %}">Log In</a>
+{% endif %}
+<h1>Заметки</h1>
+<a href="{% url 'uploads' %}">Загрузить запись</a>
+<br><a href="{% url 'add_news' %}">Добавить заметку</a></br>
 {% if news_list %}
 <ul>
 {% for news in news_list %}
 <li><td align="left"><a href="/news/{{ news.id }}">{{ news.title }}</a></td>
-    <td align="left">{{ news.description }}</td>
+    <br><td align="left">{{ news.text|truncatechars:30 }}</td></br>
 </li>
 {% endfor %}
 </ul>
+<p>{% trans 'Translated text.' %}</p>
 {% else %}
 <p>Новостей нет.</p>
 {% endif %}
+{% endblock %}
 </html>

@@ -11,6 +11,12 @@
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Сохранить</button>
     </form>
+    <h2>Загрузить файл</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form2.as_p }}
+        <button type="submit">Загрузить</button>
+    </form>
 {% endblock %}
 </body>
 </html>

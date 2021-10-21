@@ -1,0 +1,25 @@
+<html>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/news.css' %}">
+{% if user.is_authenticated %}
+<p>Hi {{ user.username }}!</p>
+<p><a href="{% url 'logout' %}">Log out</a></p>
+{% else %}
+<p>You are not logged in.</p>
+<a href="{% url 'login' %}">Log In</a>
+{% endif %}
+<h1>Заметки</h1>
+<a href="{% url 'add_news' %}">Добавить заметку</a>
+{% if items_list %}
+<ul>
+{% for item in items_list %}
+<li><td align="left"><a href="/news/{{ news.id }}">{{ item.title }}</a></td>
+    <br><td align="left">{{ item.text|truncatechars:30 }}</td></br>
+    <br><td align="left">{{ item.date_publication }}</td></br>
+</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>Новостей нет.</p>
+{% endif %}
+</html>

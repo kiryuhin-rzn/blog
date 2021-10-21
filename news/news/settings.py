@@ -25,25 +25,28 @@ SECRET_KEY = 'd0p-d=h0^6f%t69315alz))w3q=%87f6o-72@k^oczeo58r_--'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['kiryuhin84.pythonanywhere.com']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'app_news',
+    'app_news.apps.AppNewsConfig',
+    'app_users',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'app_goods',
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -115,8 +118,36 @@ USE_L10N = True
 
 USE_TZ = True
 
+LANGUAGES = [
+    ('ru', 'Русский'),
+    ('en', 'English'),
+]
+
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale'),]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+
+
 STATIC_URL = '/static/'
+
+
+SESSION_COOKIE_AGE = 30*24*60*60
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+MEDIA_URL = '/media/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+#STATICFILES_DIRS = [
+#    "/home/kiryuhin84/blog/news/static/admin/",
+#]
+LOGIN_REDIRECT_URL = '/'

@@ -1,25 +1,58 @@
+{% extends 'app_news/base.html' %}
+{% block content %}
+{% load static %}
 <html lang='ru'>
 <head>
+    <link rel="stylesheet" href="{% static '/news/css/news.css' %}">
     <meta charset='UTF-8'>
     <title>{{ object.title }}</title>
 </head>
+{% if user.is_authenticated %}
+<p>Hi {{ user.username }}!</p>
+<p><a href="{% url 'logout' %}">Log out</a></p>
+{% else %}
+<p>You are not logged in.</p>
+<a href="{% url 'login' %}">Log In</a>
+{% endif %}
 <body>
-<h1>{{ object.title }}</h1>
-<a href="{% url 'news_edit' pk=news.pk %}">Редактировать</a>
-<p>{{ object.text }}</p>
-<p>{{ object.author }}</p>
-<p>{{ object.status }}
-<p>{{ object.date_updated }}
-<p>{{ object.date_publication }}</p>
-<a href="{% url 'add_comment_to_news' pk=news.pk %}">Добавить комментарий</a>
-<hr>
-{% for comment in news.comments.all %}
-    <div class="comment">
-        <strong>{{ comment.author }}</strong>
-        <p>{{ comment.text|linebreaks }}</p>
+    <div class="content container">
+        <div class="row">
+                <div class="col-md-8">
+                <h1>{{ object.title }}</h1>
+                {% for photo in news.file.all %}
+                    <img src="{{ photo.file.url }}" width="25%" alt="Фото">
+                {% endfor %}
+                <p>{{ object.text|linebreaks }}</p>
+                <p>{{ object.author }}</p>
+                <p>{{ object.status }}</p>
+                <p>{{ object.date_updated }}</p>
+                <p>{{ object.date_publication }}</p>
+                <a href="{% url 'news_edit' pk=news.pk %}">Редактировать</a>
+                <a href="{% url 'upload_files' pk=news.pk %}">Загрузить файл</a>
+            </div>
+        </div>
     </div>
+<hr>
+{{form.errors}}
+
+    <h1>Добавить комментарий</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Отправить</button>
+    </form>
+
+{% for comment in news.comments.all %}
+<div class="comment">
+    {% if user.is_authenticated%}
+    {{ request.user.first_name }}
+    {% else %}
+    <strong>{{ comment.author }}</strong>
+    {% endif %}
+<p>{{ comment.text|linebreaks }}</p>
+</div>
 {% empty %}
-    <p>Пока нет комментарий :(</p>
+<p>Пока нет комментарий :(</p>
 {% endfor %}
+{% endblock %}
 </body>
 </html>
