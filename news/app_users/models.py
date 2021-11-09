@@ -1,5 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+#from django.db.models.signals import post_save
+#from django.dispatch import receiver
+#from django.core.cache import cache
+#from django.core.cache.utils import make_template_fragment_key
 
 
 class Profile(models.Model):
@@ -20,11 +24,18 @@ class Profile(models.Model):
             ('can_verify', 'Может верифицировать'),
             )
 
-'''
+
 class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    balance = models.CharField(max_length=100)
-    promotions = models.CharField(max_length=100)
-    offers = models.CharField(max_length=100)
-    payment_history = models.CharField(max_length=100)
+    balance = models.CharField(max_length=100, blank=True)
+    promotions = models.CharField(max_length=100, blank=True)
+    offers = models.CharField(max_length=100, blank=True)
+    payment_history = models.CharField(max_length=100, blank=True)
+
+
+'''
+@receiver(post_save, sender=Account)
+def clear_cache(sender, instance, **kwargs):
+    key = make_template_fragment_key('footer', request.user.username)
+    cache.delete(key)
 '''

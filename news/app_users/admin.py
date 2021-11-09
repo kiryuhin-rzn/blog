@@ -1,5 +1,5 @@
 from django.contrib import admin
-from app_users.models import Profile
+from app_users.models import Profile, Account
 
 
 class ProfileAdmin(admin.ModelAdmin):
@@ -18,3 +18,9 @@ class ProfileAdmin(admin.ModelAdmin):
     mark_as_unverified.short_description = 'Не верифицирован'
 
 admin.site.register(Profile, ProfileAdmin)
+
+
+class AccountAdmin(admin.ModelAdmin):
+    list_display = ('user', 'balance', 'promotions', 'offers', 'payment_history')
+
+admin.site.register(Account, AccountAdmin)

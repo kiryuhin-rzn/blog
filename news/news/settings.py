@@ -39,7 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admindocs',
     'app_goods',
+    'rest_framework',
+    'drf_yasg',
+    'app_market',
 
 ]
 
@@ -71,6 +75,12 @@ TEMPLATES = [
         },
     },
 ]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        }
+}
 
 WSGI_APPLICATION = 'news.wsgi.application'
 
@@ -150,4 +160,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 #STATICFILES_DIRS = [
 #    "/home/kiryuhin84/blog/news/static/admin/",
 #]
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/users/account/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100
+}
+
+

@@ -1,11 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'app_news/base.html' %}
+{% block content %}
+{% load i18n %}
+{% load cache %}
+<html lang='en'>
 <head>
     <meta charset="UTF-8">
-    <title>Аккаунт</title>
+    <title>{% trans 'Account' %}</title>
 </head>
 <body>
-    <h2>Аккаунт</h2>
-{% context %}
+{% if user.is_authenticated %}
+<p>Hi {{ user.username }}!</p>
+<p><a href="{% url 'logout' %}">{% trans 'Log out' %}</a></p>
+{% else %}
+<p>You are not logged in.</p>
+<a href="{% url 'login' %}">{% trans 'Log in' %}</a>
+{% endif %}
+    <h2>{% trans 'Account' %}</h2>
+<ul>
+    <li><b>{{ username }}</b></li>
+    <li><b>{% trans 'Balance' %}: </b>{{ balance }}</li>
+    <li><b>{% trans 'Promotions' %}: </b>{{ promotions }}</li>
+    <li><b>{% trans 'Offers' %}: </b>{{ offers }}</li>
+    {% cache 500 footer request.user.username %}
+    <li><b>{% trans 'Payment history' %}: </b>{{ payment_history }}</li>
+    {% endcache %}
+</ul>
+<p>
+<button>
+    <a href="{% url 'balance' %}">{% trans 'Top up balance' %}</a>
+</button>
+</p>
 </body>
+{% endblock %}
 </html>

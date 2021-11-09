@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from app_users.models import Account
 
 
 class AuthForm(forms.Form):
@@ -16,6 +17,13 @@ class ExtendedRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'password1', 'password2')
+
+
+class BalanceForm(forms.ModelForm):
+
+    class Meta:
+        model = Account
+        fields = ('balance',)
 
 
 
