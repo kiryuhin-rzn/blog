@@ -1,0 +1,39 @@
+{% extends 'app_news/base.html' %}
+{% block content %}
+{% load i18n %}
+<html lang='en'>
+<head>
+{% load static %}
+<link rel="stylesheet" href="{% static '/news/css/news.css' %}">
+<meta charset='UTF-8'>
+<title>{% trans 'Our translation page title' %}</title>
+</head>
+{% if user.is_authenticated %}
+<p>Hi {{ user.username }}!</p>
+<p><a href="{% url 'logout' %}">Log out</a></p>
+{% else %}
+<p>You are not logged in.</p>
+<a href="{% url 'login' %}">Log In</a>
+{% endif %}
+<h1>Корзина</h1>
+<a href="{% url 'uploads' %}">Загрузить запись</a>
+<br><a href="{% url 'add_news' %}">Добавить заметку</a></br>
+{% if cart %}
+<ul>
+{% for item in cart %}
+<li><td align="left"><a href="/shop/{{ shop.id }}">{{ item.product }}</a></td></li>
+<li>{{ item.final_price }}</li>
+<li>{{ item.quantity }}</li>
+{% endfor %}
+</ul>
+<li>Итого: {{ final_price }}</li>
+<form method="POST" class="post-form">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <input type="submit" value="Pay">
+<p>{% trans 'Translated text.' %}</p>
+{% else %}
+{% endif %}
+<p>Новостей нет.</p>
+{% endblock %}
+</html>

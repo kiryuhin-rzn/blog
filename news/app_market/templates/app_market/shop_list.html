@@ -1,0 +1,45 @@
+{% extends 'app_news/base.html' %}
+{% block content %}
+{% load i18n %}
+<html lang='en'>
+<head>
+{% load static %}
+<link rel="stylesheet" href="{% static '/news/css/news.css' %}">
+<meta charset='UTF-8'>
+<title>{% trans 'Our translation page title' %}</title>
+</head>
+{% if user.is_authenticated %}
+<p>Hi {{ user.username }}!</p>
+<p><a href="{% url 'logout' %}">Log out</a></p>
+{% else %}
+<p>You are not logged in.</p>
+<a href="{% url 'login' %}">Log In</a>
+{% endif %}
+<h1>Магазины</h1>
+<a href="{% url 'uploads' %}">Загрузить запись</a>
+<br><a href="{% url 'add_news' %}">Добавить заметку</a></br>
+{% if shop_list %}
+<ul>
+{% for shop in shop_list %}
+<li><td align="left"><a href="/shop/{{ shop.id }}">{{ shop.name }}</a></td></li>
+{% for product in shop.product_set.all %}
+<li>Товар: <b><td align="left"><a href="/shops/{{ product.id }}">{{ product.name }}</a></td></b> Цена: <b>{{ product.price }}</b> Количество: <b>{{ product.number }}</b></li>
+<form method="POST" class="post-form">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <input type="hidden" name="product" value="{{product.id}}">
+    <input type="submit" value="Add to cart">
+
+</form>
+{% endfor %}
+{% endfor %}
+
+
+</ul>
+<p>{% trans 'Translated text.' %}</p>
+
+{% else %}
+{% endif %}
+<p>Новостей нет.</p>
+{% endblock %}
+</html>
