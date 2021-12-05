@@ -1,0 +1,27 @@
+{% extends 'app_news/base.html' %}
+{% block content %}
+{% load i18n %}
+{% load cache %}
+<html lang='en'>
+<head>
+    <meta charset="UTF-8">
+    <title>{% trans 'Balance' %}</title>
+</head>
+<body>
+{% if user.is_authenticated %}
+<p>Hi {{ user.username }}!</p>
+<p><a href="{% url 'logout' %}">{% trans 'Log out' %}</a></p>
+{% else %}
+<p>You are not logged in.</p>
+<a href="{% url 'login' %}">{% trans 'Log in' %}</a>
+{% endif %}
+<h2>{% trans 'Balance' %}</h2>
+<ul>
+    <li><b>{% trans  'Your balance' %}: </b>{{ balance }}</li>
+    <form method="POST" class="post-form">{% csrf_token %}
+    <b>Enter the amount for</b> {{ form }}
+    <p><button type="submit" class="save btn btn-default">Пополнить баланс</button></p>
+</ul>
+</body>
+{% endblock %}
+</html>

@@ -40,10 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
     'app_goods',
     'rest_framework',
     'drf_yasg',
     'app_market',
+    'debug_toolbar',
+    'app_lodging',
+    'app_rss',
 
 ]
 
@@ -53,10 +58,13 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+SITE_ID = 1
 
 ROOT_URLCONF = 'news.urls'
 
@@ -72,6 +80,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries':{
+            'cutes': 'app_market.views',
+
+            }
         },
     },
 ]
@@ -168,3 +180,22 @@ REST_FRAMEWORK = {
 }
 
 
+INTERNAL_IPS = [
+    "10.0.0.66",
+]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log'
+        },
+    },
+    'root': {
+        'handlers': ['file'],
+        'level': 'DEBUG',
+        'propagate': True
+    },
+}

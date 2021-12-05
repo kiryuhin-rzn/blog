@@ -12,6 +12,11 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponse
 
 
+def sample_view(request):
+    html = '<body><h1>Django sample_view</h1><br><p>Отладка sample_view</p></body>'
+    return HttpResponse(html)
+
+
 class NewsListView(generic.ListView):
     model = News
     template_name = 'app_news/news_list.html'

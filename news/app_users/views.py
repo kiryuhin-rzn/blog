@@ -9,9 +9,14 @@ from django.core.cache import cache
 from django.core.cache.utils import make_template_fragment_key
 from app_users.forms import BalanceForm
 from django.db.models import F
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 class AnotherLoginView(LoginView):
+    logger.debug('Выполнена аутентификация пользователя')
     template_name = 'app_users/login.html'
 
 
@@ -57,6 +62,14 @@ class UserAccountView(TemplateView):
 
         context['payment_history'] = user.account.payment_history
         context['username'] = self.request.user.username
+        #context['status'] = user.account.status
+        status = user.account.status
+        if status < 5000:
+            context['status'] = 'Новичек'
+        if status >= 5000:
+            context['status'] = 'Середничек'
+        if status >= 10000:
+            context['status'] = 'Молодец'
 
         return context
 
@@ -71,7 +84,6 @@ class UserBalanceView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        #username = self.request.user.username
         user_id=self.request.user.id
         user=User.objects.get(id=user_id)
         context['balance'] = user.account.balance
@@ -94,42 +106,3 @@ class UserBalanceView(TemplateView):
         else:
             form = BalanceForm()
         return render(request, 'app_users/balance.html', {'form': form})
-
-
-'''
-def user_account(request):
-    username = request.user.username
-    user_id=request.user.id
-    user=User.objects.get(id=user_id)
-    balance = user.account.balance
-
-    promotions_cache_key = 'promotions:{}'.format(username)
-    promotions = user.account.promotions
-    cache.get_or_set(promotions_cache_key, promotions, 30*60)
-
-    offers_cache_key = 'offers:{}'.format(username)
-    offers = user.account.offers
-    cache.get_or_set(offers_cache_key, offers, 30*60)
-
-    payment_history = user.account.payment_history
-
-    return render(request, 'app_users/account.html', context={
-        'balance': balance,
-        'promotions': promotions,
-        'offers': offers,
-        'payment_history': payment_history,
-    })
-
-'''
-'''
-def update_user_account(request):
-    if request.method == 'POST':
-        user_form = UserForm(request.POST, request.FILES, instance=request.user)
-        if user_form.is_valid():
-            user_form.save()
-            return HttpResponseRedirect('/')
-    else:
-        form = UserForm()
-        return render(request, 'app_users/account.html', {'form': form})
-
-'''

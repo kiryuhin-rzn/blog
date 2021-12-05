@@ -20,7 +20,17 @@ from django.conf import settings
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
+from app_news import views as app_news_views
+import debug_toolbar
+from django.contrib.sitemaps.views import sitemap
+from app_lodging.sitemap import LodgingSitemap, StaticViewSitemap
 
+
+sitemaps = {
+    'lodging': LodgingSitemap,
+    #'news': NewsSitemap,
+    'static': StaticViewSitemap,
+}
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -45,5 +55,15 @@ urlpatterns = [
     #path('goods/', include('app_goods.urls')),
     path('i18n', include('django.conf.urls.i18n')),
     path('api/', include('app_goods.urls')),
+    path('sample/', app_news_views.sample_view),
+    path('__debug__/', include(debug_toolbar.urls)),
     path('swagger', schema_view.with_ui('swagger', cache_timeout=0), name='shema-swagger-ui'),
+    path('lodging/', include('app_lodging.urls')),
+    path('rss/', include('app_rss.urls')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+'''urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns'''

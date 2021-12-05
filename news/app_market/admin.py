@@ -1,5 +1,5 @@
 from django.contrib import admin
-from app_market.models import Shop, Product, CartProduct, Cart
+from app_market.models import Shop, Product, CartProduct, ReportSales
 
 class ShopAdmin(admin.ModelAdmin):
     list_display = ('name',)
@@ -19,14 +19,20 @@ class CartAdmin(admin.ModelAdmin):
 admin.site.register(Cart, CartAdmin)
 '''
 
-
+'''
 class CartAdmin(admin.ModelAdmin):
     list_display = ('product', 'final_price')
 
 admin.site.register(Cart, CartAdmin)
 
-
+'''
 class CartProductAdmin(admin.ModelAdmin):
     list_display = ('product', 'quantity', 'final_price')
 
 admin.site.register(CartProduct, CartProductAdmin)
+
+
+class ReportSalesAdmin(admin.ModelAdmin):
+    list_display = ('product', 'number', 'created')
+
+admin.site.register(ReportSales, ReportSalesAdmin)

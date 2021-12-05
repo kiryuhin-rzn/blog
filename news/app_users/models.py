@@ -27,10 +27,11 @@ class Profile(models.Model):
 
 class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    balance = models.CharField(max_length=100, blank=True)
+    balance = models.CharField(max_length=100, blank=True)#models.DecimalField(max_digits=10, decimal_places=2)
     promotions = models.CharField(max_length=100, blank=True)
     offers = models.CharField(max_length=100, blank=True)
     payment_history = models.CharField(max_length=100, blank=True)
+    status = models.DecimalField(max_digits=10, decimal_places=2, blank=True, default=1)
 
 
 '''

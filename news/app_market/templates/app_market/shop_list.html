@@ -1,9 +1,9 @@
 {% extends 'app_news/base.html' %}
 {% block content %}
 {% load i18n %}
+{% load static %}
 <html lang='en'>
 <head>
-{% load static %}
 <link rel="stylesheet" href="{% static '/news/css/news.css' %}">
 <meta charset='UTF-8'>
 <title>{% trans 'Our translation page title' %}</title>
@@ -29,15 +29,11 @@
     {% csrf_token %}
     <input type="hidden" name="product" value="{{product.id}}">
     <input type="submit" value="Add to cart">
-
 </form>
 {% endfor %}
 {% endfor %}
-
-
 </ul>
 <p>{% trans 'Translated text.' %}</p>
-
 {% else %}
 {% endif %}
 <p>Новостей нет.</p>

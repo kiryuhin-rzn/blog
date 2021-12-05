@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список продаваемого жилья</title>
+</head>
+<h1>Список продаваемого жилья</h1>
+<body>
+{% block content %}
+<ul>
+    {% for lodging in lodging_list %}
+        <li><td align="left"><a href="/lodging/lodging/{{ lodging.id }}">{{ lodging.name }}</a></td>
+    {% endfor %}
+</ul>
+{% endblock %}
+</body>
+</html>

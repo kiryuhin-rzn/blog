@@ -24,6 +24,7 @@
     {% cache 500 footer request.user.username %}
     <li><b>{% trans 'Payment history' %}: </b>{{ payment_history }}</li>
     {% endcache %}
+    <li><b>{% trans 'Status' %}: </b>{{ status }}</li>
 </ul>
 <p>
 <button>

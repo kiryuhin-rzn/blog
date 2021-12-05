@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Описание жилья</title>
+</head>
+<h1>Описание жилья</h1>
+<body>
+{% block content %}
+<h2>{{ lodging.name }}</h2>
+<p>{{ lodging.description }}</p>
+<p>{{ lodging.published_at }}</p>
+ {% endblock %}
+</body>
+</html>

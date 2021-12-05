@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Новости</title>
+</head>
+<h1>Новости</h1>
+<body>
+{% block content %}
+<ul>
+    {% for news in news_list %}
+        <li><td align="left"><a href="/lodging/news/{{ news.id }}">{{ news.title }}</a></td>
+        <br><td align="left">{{ news.text|truncatechars:30 }}</td></br>
+    {% endfor %}
+</ul>
+{% endblock %}
+</body>
+</html>
