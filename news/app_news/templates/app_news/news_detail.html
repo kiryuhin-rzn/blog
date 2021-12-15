@@ -28,6 +28,7 @@
                 <p>{{ object.date_updated }}</p>
                 <p>{{ object.date_publication }}</p>
                 <a href="{% url 'news_edit' pk=news.pk %}">Редактировать</a>
+                <a href="{% url 'news_delete' pk=news.pk %}">Удалить</a>
                 <a href="{% url 'upload_files' pk=news.pk %}">Загрузить файл</a>
             </div>
         </div>

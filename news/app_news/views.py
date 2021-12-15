@@ -1,15 +1,17 @@
 from django.shortcuts import render
-from .forms import CommentForm, UploadFileForm, DocumentForm, MultiFileForm, UploadNewsForm
-from .models import News, File
+from app_news.forms import CommentForm, UploadFileForm, DocumentForm, MultiFileForm, UploadNewsForm, NewsSearchForm
+from app_news.models import News, File
 from django.views import generic
 from django.shortcuts import redirect
 from django.views.generic.edit import UpdateView
 from django.shortcuts import get_object_or_404
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, DeleteView
 from django.views.generic import DetailView
 from django import forms
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponse
+from django.urls import reverse_lazy
+from django.db.models import Q
 
 
 def sample_view(request):
@@ -17,11 +19,38 @@ def sample_view(request):
     return HttpResponse(html)
 
 
+class NewsSearchView(generic.ListView):
+    model = News
+    template_name = 'news_search.html'
+
+    def get_queryset(self): # новый
+        query = self.request.GET.get('q')
+        object_list = News.objects.filter(
+            Q(title__icontains=query) | Q(text__icontains=query)
+        )
+        return object_list
+
+
 class NewsListView(generic.ListView):
     model = News
     template_name = 'app_news/news_list.html'
     context_object_name = 'news_list'
     queryset = News.objects.order_by('-date_publication')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        form = NewsSearchForm(self.request.GET)
+        context['form'] = form
+        return context
+
+    '''def get(self, *args, **kwargs):
+        form = NewsSearchForm(self.request.GET)
+        if form.is_valid():
+            title_field = form.cleaned_data.get('title_field')
+            query = self.request.GET.get(title_field)
+            object_list = News.objects.filter(Q(title__icontains=query) | Q(text__icontains=query))
+        return object_list'''
+
 
 
 class NewsDetailView(DetailView):
@@ -75,6 +104,7 @@ class NewsCreateView(PermissionRequiredMixin, CreateView):
 
 
 
+
 def upload_file(request):
     if request.method =='POST':
         upload_file_form = UploadFileForm(request.POST, request.FILES)
@@ -108,6 +138,12 @@ class NewsUpdateView(PermissionRequiredMixin, UpdateView):
     template_name = 'app_news/news_edit.html'
     fields = ['title', 'text']
 
+
+class NewsDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = 'app_news.can_delete'
+    model = News
+    template_name = 'app_news/news_delete.html'
+    success_url = reverse_lazy('news_list')
 
 
 def form_upload(request, pk):

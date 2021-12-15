@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'app_lodging',
     'app_rss',
+    'tinymce',
 
 ]
 

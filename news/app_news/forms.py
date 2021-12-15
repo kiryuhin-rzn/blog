@@ -1,5 +1,6 @@
 from django import forms
-from .models import News, Comment, File
+from app_news.models import News, Comment, File
+#from tinymce.widgets import TinyMCE
 
 
 class NewsForm(forms.ModelForm):
@@ -14,6 +15,11 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('author', 'text',)
+
+
+class NewsSearchForm(forms.Form):
+    #name_field = forms.TextInput(attrs={'size': 10, 'title': 'Your name'})
+    title_field = forms.CharField(max_length=50)
 
 
 class UploadFileForm(forms.Form):
