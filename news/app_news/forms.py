@@ -1,6 +1,7 @@
 from django import forms
 from app_news.models import News, Comment, File
 #from tinymce.widgets import TinyMCE
+#from tinymce.widgets import TinyMCE
 
 
 class NewsForm(forms.ModelForm):
