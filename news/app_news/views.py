@@ -23,12 +23,33 @@ class NewsSearchView(generic.ListView):
     model = News
     template_name = 'news_search.html'
 
-    def get_queryset(self): # новый
+    def get_queryset(self):
+        form = NewsSearchForm(self.request.GET)
+        if form.is_valid():
+            serch_field = form.cleaned_data.get('search_field')
+            object_list = News.objects.filter(Q(title__icontains=serch_field) | Q(text__icontains=serch_field))
+
+            return object_list
+
+'''    def get_queryset(self): # новый
         query = self.request.GET.get('q')
         object_list = News.objects.filter(
             Q(title__icontains=query) | Q(text__icontains=query)
         )
-        return object_list
+        return object_list'''
+
+
+
+'''    def get(self, *args, **kwargs):
+        form = NewsSearchForm(self.request.GET)
+        if form.is_valid():
+            title_field = form.cleaned_data.get('title_field')
+            query = self.request.GET.get(title_field)
+            object_list = News.objects.filter(Q(title__icontains=query) | Q(text__icontains=query))
+            render(self.request, 'app_news/news_search.html', object_list)'''
+
+
+
 
 
 class NewsListView(generic.ListView):
@@ -42,15 +63,6 @@ class NewsListView(generic.ListView):
         form = NewsSearchForm(self.request.GET)
         context['form'] = form
         return context
-
-    '''def get(self, *args, **kwargs):
-        form = NewsSearchForm(self.request.GET)
-        if form.is_valid():
-            title_field = form.cleaned_data.get('title_field')
-            query = self.request.GET.get(title_field)
-            object_list = News.objects.filter(Q(title__icontains=query) | Q(text__icontains=query))
-        return object_list'''
-
 
 
 class NewsDetailView(DetailView):

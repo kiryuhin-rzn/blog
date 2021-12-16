@@ -20,7 +20,8 @@ class CommentForm(forms.ModelForm):
 
 class NewsSearchForm(forms.Form):
     #name_field = forms.TextInput(attrs={'size': 10, 'title': 'Your name'})
-    title_field = forms.CharField(max_length=50)
+    #title_field = forms.CharField(max_length=50)
+    search_field = forms.CharField(label='Search', max_length=100)
 
 
 class UploadFileForm(forms.Form):
