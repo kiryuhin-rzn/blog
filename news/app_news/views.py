@@ -12,6 +12,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.db.models import Q
+#from django.views.generic.edit import FormView
 
 
 def sample_view(request):
@@ -30,6 +31,9 @@ class NewsSearchView(generic.ListView):
             object_list = News.objects.filter(Q(title__icontains=serch_field) | Q(text__icontains=serch_field))
 
             return object_list
+
+
+
 
 '''    def get_queryset(self): # новый
         query = self.request.GET.get('q')
@@ -60,8 +64,8 @@ class NewsListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        form = NewsSearchForm(self.request.GET)
-        context['form'] = form
+        form = NewsSearchForm()
+        context['form2'] = form
         return context
 
 

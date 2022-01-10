@@ -8,13 +8,6 @@
 <meta charset='UTF-8'>
 <title>{% trans 'Our translation page title' %}</title>
 </head>
-<form action="{% url 'news_search' %}" method="get">
-  <input name="q" type="text" placeholder="Search...">
-</form>
-<form action="{% url 'news_search' %}" method="GET" class="get-form">{% csrf_token %}
-{{ form.as_p }}
-<button type="submit" class="save btn btn-default">Поиск</button>
-</form>
 {% if user.is_authenticated %}
 <p>Hi {{ user.username }}!</p>
 <p><a href="{% url 'logout' %}">Log out</a></p>
@@ -22,6 +15,10 @@
 <p>You are not logged in.</p>
 <a href="{% url 'login' %}">Log In</a>
 {% endif %}
+<form action="{% url 'news_search' %}" method="GET" class="get-form">{% csrf_token %}
+{{ form2.as_p }}
+<button type="submit" class="save btn btn-default">Поиск</button>
+</form>
 <h1>Заметки</h1>
 <a href="{% url 'uploads' %}">Загрузить запись</a>
 <br><a href="{% url 'add_news' %}">Добавить заметку</a></br>

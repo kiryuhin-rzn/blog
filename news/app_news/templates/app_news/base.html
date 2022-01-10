@@ -2,6 +2,10 @@
 <!DOCTYPE html>
 <html>
 <header>
+<form action="{% url 'news_search' %}" method="GET" class="get-form">{% csrf_token %}
+{{ form2.as_p }}
+<button type="submit" class="save btn btn-default">Поиск</button>
+</form>
 <form action='{% url 'set_language' %}' method='post'>{% csrf_token %}
     <input name='next' type='hidden' value='{{ redirect_to }}'>
     <select name='language'>

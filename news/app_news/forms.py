@@ -1,5 +1,6 @@
 from django import forms
 from app_news.models import News, Comment, File
+#from django.db.models import Q
 #from tinymce.widgets import TinyMCE
 #from tinymce.widgets import TinyMCE
 
@@ -22,6 +23,11 @@ class NewsSearchForm(forms.Form):
     #name_field = forms.TextInput(attrs={'size': 10, 'title': 'Your name'})
     #title_field = forms.CharField(max_length=50)
     search_field = forms.CharField(label='Search', max_length=100)
+
+'''def search(self):
+        serch_field = self.cleaned_data.get('search_field')
+        object_list = News.objects.filter(Q(title__icontains=serch_field) | Q(text__icontains=serch_field))
+        return object_list'''
 
 
 class UploadFileForm(forms.Form):
