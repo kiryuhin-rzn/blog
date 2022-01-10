@@ -61,7 +61,8 @@ urlpatterns = [
     path('lodging/', include('app_lodging.urls')),
     path('rss/', include('app_rss.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
-    path('tinymce/', include('tinymce.urls'))
+    path('tinymce/', include('tinymce.urls')),
+    path('todo/', include('app_todo.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

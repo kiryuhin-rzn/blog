@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do List</title>
+    {% load i18n %}
+    {% load static %}
+
+<title>To Do</title>
+</head>
+<body>
+{% block content %}
+<h1>My To Do List</h1>
+{{ now }}
+<form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+<button type="submit" class="save btn btn-default">Add To-Do</button>
+<ul>
+    {% for i in object_list %}
+    <li><td align="left"><a href="/todo/{{ i.id }}">{{i.content}}</a></td>
+    {{i.date_due}}
+    {% endfor %}
+</ul>
+{{ context }}
+{% endblock %}
+</body>
+</html>

@@ -25,7 +25,7 @@ SECRET_KEY = 'd0p-d=h0^6f%t69315alz))w3q=%87f6o-72@k^oczeo58r_--'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['kiryuhin84.pythonanywhere.com']
+ALLOWED_HOSTS = ['kiryuhin84.pythonanywhere.com']#'kiryuhin84.pythonanywhere.com'
 
 
 # Application definition
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'app_lodging',
     'app_rss',
     'tinymce',
+    'app_todo',
 
 ]
 
